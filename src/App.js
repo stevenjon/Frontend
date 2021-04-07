@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { useState } from "react";
+import { Layout } from "antd";
+import TopicMenu from "./Components/Sidebar/TopicMenu";
+import "./App.css";
+import NavBar from "./Components/Sidebar/Navbar";
+import SideBar from "./Components/Sidebar/Sidebar";
+import { Route, Switch, withRouter} from 'react-router-dom'
+function App({location}) {
+  const topics = ["/", "/Home", "/Users"];
+  const [selectedKey, setSelectedKey] = useState(location.pathname);
+  const changeSelectedKey = (event) => {
+    const key = event.key;
+    setSelectedKey(key);
+  };
+  const Menu = (
+    <TopicMenu
+      topics={topics}
+      selectedKey={selectedKey}
+      changeSelectedKey={changeSelectedKey}
+    />
+  );
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <NavBar menu={Menu} />
+      <Layout>
+        <SideBar menu={Menu} />
+        <Layout.Content className="content">
+            <Switch>
+            {topics.map(topic => <Route exact path={topic}><h1>Hello {topic.slice(1) }</h1></Route>)}
+            </Switch>
+        </Layout.Content>
+      </Layout>
+      </div>
+   
   );
 }
-
-export default App;
+export default withRouter(App);
