@@ -1,4 +1,5 @@
 import { BaseUrl } from "../BaseUrl";
+// url, method, data , id
 
 const FetchApi = async (url,  method, data = null, id = null) => {
   const uri = id ? url + "/" + id : url;
