@@ -6,7 +6,7 @@ const FetchApi = async (url,  method, data = null, id = null) => {
   try {
     return await axios({
       method: method,
-      url: BaseUrl + uri,
+      url: BaseUrl + uri, //import BaseUrl
       data: data,
     });
   } catch (error) {
